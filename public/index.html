@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>keepsake — A little place for the good things</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,500;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f2e9;
+      --bg-Glow: #fbf6e8;
+      --text: #1f1d1a;
+      --muted: #787168;
+      --light-muted: #a69f95;
+      --terracotta: #bf5b37;
+      --terracotta-hover: #a74b29;
+      --terracotta-soft: #d9a08b;
+      --sage: #738276;
+      --tape: #e6c883;
+      --card-bg: #ffffff;
+      --border: #e2dcd0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 20%, var(--bg-Glow) 0%, var(--bg) 65%);
+      color: var(--text);
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Navigation */
+    header.navbar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: var(--text);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .brand-star {
+      color: var(--terracotta);
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: color 0.2s;
+      padding: 6px 2px;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      color: var(--text);
+    }
+
+    .nav-btn svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    /* Views */
+    .view {
+      display: none;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 40px 90px;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0.95; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 18px;
+    }
+
+    /* 1. LANDING VIEW */
+    .landing-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 60px;
+      align-items: center;
+      min-height: 76vh;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(3rem, 5.4vw, 4.7rem);
+      font-weight: 500;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      margin-bottom: 26px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--terracotta);
+      font-weight: 400;
+      display: block;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.65;
+      max-width: 440px;
+      margin-bottom: 34px;
+    }
+
+    .btn-primary {
+      background: var(--terracotta);
+      color: #fff;
+      border: none;
+      padding: 15px 28px;
+      border-radius: 999px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.96rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(191, 91, 55, 0.25);
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover {
+      background: var(--terracotta-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled {
+      background: var(--terracotta-soft);
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .hero-footnote {
+      margin-top: 18px;
+      font-size: 0.8rem;
+      color: var(--light-muted);
+    }
+
+    /* Polaroid Collage on Landing */
+    .collage-stage {
+      position: relative;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .polaroid {
+      background: #fff;
+      padding: 16px 16px 46px 16px;
+      box-shadow: 0 20px 45px rgba(31, 29, 26, 0.12);
+      border-radius: 3px;
+      position: relative;
+    }
+
+    .polaroid-main {
+      width: 320px;
+      transform: rotate(-6deg) translate(-35px, -15px);
+      z-index: 2;
+    }
+
+    .polaroid-main img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .polaroid-secondary {
+      width: 245px;
+      position: absolute;
+      right: 15px;
+      bottom: 20px;
+      transform: rotate(7deg);
+      z-index: 3;
+      padding: 13px 13px 38px 13px;
+    }
+
+    .polaroid-secondary img {
+      width: 100%;
+      height: 215px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .polaroid-caption {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      color: #5c564f;
+      font-size: 0.98rem;
+      position: absolute;
+      bottom: 13px;
+      left: 16px;
+    }
+
+    .masking-tape {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+      width: 96px;
+      height: 28px;
+      background: rgba(230, 200, 131, 0.78);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      z-index: 5;
+    }
+
+    .sage-sticker {
+      position: absolute;
+      left: 38px;
+      bottom: 85px;
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: var(--sage);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.2;
+      transform: rotate(-10deg);
+      z-index: 4;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    /* 2. CREATE / STUDIO VIEW */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 36px;
+    }
+
+    .back-link:hover {
+      color: var(--text);
+    }
+
+    .studio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(2.2rem, 3.8vw, 3.1rem);
+      font-weight: 500;
+      line-height: 1.12;
+      margin-bottom: 36px;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--terracotta);
+      font-weight: 400;
+    }
+
+    .field-group {
+      margin-bottom: 28px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .text-input, .select-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .text-input::placeholder {
+      color: #bdb6ac;
+    }
+
+    .text-input:focus, .select-input:focus {
+      border-bottom-color: var(--terracotta);
+    }
+
+    .file-drop {
+      border: 1.5px dashed #d5cec2;
+      border-radius: 12px;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 28px;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .file-drop:hover {
+      border-color: var(--terracotta);
+      background: rgba(255, 255, 255, 0.65);
+    }
+
+    .file-drop-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .file-drop-right {
+      font-size: 0.78rem;
+      color: var(--light-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .save-btn {
+      border-radius: 12px;
+      padding: 14px 26px;
+    }
+
+    /* Tilted Polaroid Preview Card */
+    .preview-stage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .preview-polaroid {
+      background: #fff;
+      width: 370px;
+      padding: 20px 20px 64px 20px;
+      box-shadow: 0 24px 48px rgba(31, 29, 26, 0.09);
+      transform: rotate(-16deg);
+      transition: transform 0.35s ease;
+      position: relative;
+    }
+
+    .preview-polaroid:hover {
+      transform: rotate(-12deg) scale(1.01);
+    }
+
+    .preview-Frame {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #f3ede1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--light-muted);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview-Frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .preview-placeholder {
+      text-align: center;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.4;
+      color: #aca499;
+    }
+
+    .preview-placeholder svg {
+      width: 34px;
+      height: 34px;
+      margin-bottom: 14px;
+      stroke: #aca499;
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .preview-caption-text {
+      position: absolute;
+      bottom: 20px;
+      left: 22px;
+      right: 22px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: #4a453f;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 3. GALLERY VIEW */
+    .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 42px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .add-memory-btn {
+      background: var(--terracotta);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .add-memory-btn:hover {
+      background: var(--terracotta-hover);
+    }
+
+    .memories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 38px;
+    }
+
+    .memory-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .memory-img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #ebe5d8;
+      overflow: hidden;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 24px rgba(31, 29, 26, 0.08);
+    }
+
+    .memory-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .memory-item:hover .memory-img-wrap img {
+      transform: scale(1.02);
+    }
+
+    .memory-actions {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      gap: 8px;
+      opacity: 0.95;
+      transition: opacity 0.2s ease;
+    }
+
+    .memory-img-wrap:hover .memory-actions {
+      opacity: 1;
+    }
+
+    .icon-action-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(246, 242, 233, 0.94);
+      border: 1px solid rgba(0,0,0,0.06);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      transition: background 0.15s, transform 0.15s;
+    }
+
+    .icon-action-btn:hover {
+      background: #fff;
+      transform: translateY(-1px);
+    }
+
+    .icon-action-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    .memory-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .memory-mood {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.86rem;
+      color: var(--terracotta);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .mood-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #f2c94c;
+      display: inline-block;
+    }
+
+    .memory-date {
+      font-size: 0.78rem;
+      color: var(--light-muted);
+    }
+
+    /* Inline Edit Box */
+    .inline-edit-box {
+      background: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-top: 6px;
+    }
+
+    .inline-edit-box input, .inline-edit-box select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .inline-edit-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      border: none;
+      font-weight: 500;
+    }
+
+    .btn-sm-save {
+      background: var(--terracotta);
+      color: #fff;
+    }
+
+    .btn-sm-cancel {
+      background: #e9e4da;
+      color: var(--text);
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 70px 20px;
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      color: var(--muted);
+    }
+
+    .empty-state h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    @media (max-width: 900px) {
+      .landing-grid, .studio-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      header.navbar, .view {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+      .preview-polaroid {
+        width: 300px;
+        transform: rotate(-8deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation (Shown on Studio & Gallery views) -->
+  <header class="navbar" id="topNavbar" style="display: none;">
+    <a class="brand" onclick="switchView('landing')">
+      <span class="brand-star">✦</span> keepsake
+    </a>
+    <div class="nav-links">
+      <button class="nav-btn" id="navNewBtn" onclick="switchView('create')">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.2"/></svg>
+        New memory
+      </button>
+      <button class="nav-btn" id="navGalleryBtn" onclick="switchView('gallery')">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="7" height="7" rx="1"/><rect x="14" y="4" width="7" height="7" rx="1"/><rect x="3" y="15" width="7" height="5" rx="1"/><rect x="14" y="15" width="7" height="5" rx="1"/></svg>
+        Gallery
+      </button>
+    </div>
+  </header>
+
+  <!-- 1. LANDING VIEW -->
+  <main class="view active" id="view-landing">
+    <div class="landing-grid">
+      <div>
+        <div class="eyebrow">A LITTLE PLACE FOR THE GOOD THINGS</div>
+        <h1 class="hero-title">
+          Keep the<br/>moments
+          <em>you want to feel<br/>again.</em>
+        </h1>
+        <p class="hero-sub">
+          A warm, wonderfully simple journal for photographs, feelings, and the tiny stories in between.
+        </p>
+        <button class="btn-primary" onclick="switchView('gallery')">
+          Continue to your journal <span>→</span>
+        </button>
+        <div class="hero-footnote">Your memories stay yours, always.</div>
+      </div>
+
+      <div class="collage-stage">
+        <div class="polaroid polaroid-main">
+          <div class="masking-tape"></div>
+          <img src="https://images.unsplash.com/photo-1516541196182-6bdb0516ed27?auto=format&fit=crop&w=700&q=80" alt="Memories table" />
+          <span class="polaroid-caption">slow mornings</span>
+        </div>
+
+        <div class="polaroid polaroid-secondary">
+          <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="Open road" />
+          <span class="polaroid-caption">somewhere lovely</span>
+        </div>
+
+        <div class="sage-sticker">
+          <span>save</span>
+          <span>this ✿</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 2. CREATE MEMORY STUDIO VIEW -->
+  <section class="view" id="view-create">
+    <button class="back-link" onclick="switchView('gallery')">
+      ‹ Your gallery
+    </button>
+
+    <div class="studio-grid">
+      <div>
+        <div class="eyebrow">CAPTURE A MOMENT</div>
+        <h2 class="section-title">What do you want to<br/>remember?</h2>
+
+        <form id="memoryForm">
+          <div class="field-group">
+            <label class="field-label" for="titleInput">Title</label>
+            <input type="text" id="titleInput" class="text-input" placeholder="e.g. Sunday by the sea" required />
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="moodInput">How are you feeling?</label>
+            <select id="moodInput" class="select-input">
+              <option value="Happy">Happy</option>
+              <option value="Calm">Calm</option>
+              <option value="Excited">Excited</option>
+              <option value="Loved">Loved</option>
+              <option value="Thoughtful">Thoughtful</option>
+              <option value="Sad">Sad</option>
+              <option value="Tired">Tired</option>
+            </select>
+          </div>
+
+          <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" style="display: none;" required />
+          <div class="file-drop" onclick="document.getElementById('photoInput').click()">
+            <div class="file-drop-left">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <path d="M21 15l-5-5L5 21"/>
+              </svg>
+              <span id="fileNameLabel">Choose a photo</span>
+            </div>
+            <span class="file-drop-right">JPG, PNG</span>
+          </div>
+
+          <button type="submit" id="saveMemoryBtn" class="btn-primary save-btn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/>
+              <polyline points="7 3 7 8 15 8"/>
+            </svg>
+            <span id="saveBtnText">Save memory</span>
+          </button>
+        </form>
+      </div>
+
+      <div class="preview-stage">
+        <div class="preview-polaroid">
+          <div class="masking-tape"></div>
+          <div class="preview-Frame">
+            <img id="livePreviewImg" alt="Preview" />
+            <div class="preview-placeholder" id="previewPlaceholder">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <path d="M21 15l-5-5L5 21"/>
+              </svg>
+              <div>Your photo<br/>will live here</div>
+            </div>
+          </div>
+          <div class="preview-caption-text" id="livePreviewCaption">A moment worth keeping</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. GALLERY VIEW -->
+  <section class="view" id="view-gallery">
+    <div class="gallery-header">
+      <div>
+        <div class="eyebrow">YOUR COLLECTED MOMENTS</div>
+        <h2 class="section-title" style="margin-bottom: 0;">A gallery of <em>good days.</em></h2>
+      </div>
+      <button class="add-memory-btn" onclick="switchView('create')">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <line x1="12" y1="8" x2="12" y2="16"/>
+          <line x1="8" y1="12" x2="16" y2="12"/>
+        </svg>
+        Add memory
+      </button>
+    </div>
+
+    <div class="memories-grid" id="memoriesGrid">
+      <!-- Populated dynamically from AWS S3 + DynamoDB -->
+    </div>
+  </section>
+
+  <script>
+    const API_URL = '/api/photos';
+    let memoriesCache = [];
+
+    const MOOD_COLORS = {
+      Happy: '#f2c94c',
+      Calm: '#6fcf97',
+      Excited: '#f2994a',
+      Loved: '#eb5757',
+      Thoughtful: '#9b51e0',
+      Sad: '#56ccf2',
+      Tired: '#a69f95'
+    };
+
+    function switchView(viewName) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById(`view-${viewName}`).classList.add('active');
+
+      const navbar = document.getElementById('topNavbar');
+      if (viewName === 'landing') {
+        navbar.style.display = 'none';
+      } else {
+        navbar.style.display = 'flex';
+      }
+
+      document.getElementById('navNewBtn').classList.toggle('active', viewName === 'create');
+      document.getElementById('navGalleryBtn').classList.toggle('active', viewName === 'gallery');
+
+      if (viewName === 'gallery') {
+        loadGallery();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Live Polaroid Preview Listeners
+    const titleInput = document.getElementById('titleInput');
+    const photoInput = document.getElementById('photoInput');
+    const livePreviewCaption = document.getElementById('livePreviewCaption');
+    const livePreviewImg = document.getElementById('livePreviewImg');
+    const previewPlaceholder = document.getElementById('previewPlaceholder');
+    const fileNameLabel = document.getElementById('fileNameLabel');
+
+    titleInput.addEventListener('input', () => {
+      const val = titleInput.value.trim();
+      livePreviewCaption.textContent = val || 'A moment worth keeping';
+    });
+
+    photoInput.addEventListener('change', () => {
+      const file = photoInput.files[0];
+      if (!file) return;
+      fileNameLabel.textContent = file.name;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        livePreviewImg.src = e.target.result;
+        livePreviewImg.style.display = 'block';
+        previewPlaceholder.style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Upload New Memory to S3 + DynamoDB
+    document.getElementById('memoryForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const file = photoInput.files[0];
+      if (!file) {
+        alert('Please choose a photo first.');
+        return;
+      }
+
+      const saveBtn = document.getElementById('saveMemoryBtn');
+      const saveBtnText = document.getElementById('saveBtnText');
+      saveBtn.disabled = true;
+      saveBtnText.textContent = 'Saving...';
+
+      const formData = new FormData();
+      formData.append('title', titleInput.value.trim());
+      formData.append('mood', document.getElementById('moodInput').value);
+      formData.append('image', file);
+
+      try {
+        const res = await fetch(API_URL, { method: 'POST', body: formData });
+        if (!res.ok) throw new Error('Upload failed');
+
+        // Reset form and preview
+        document.getElementById('memoryForm').reset();
+        fileNameLabel.textContent = 'Choose a photo';
+        livePreviewCaption.textContent = 'A moment worth keeping';
+        livePreviewImg.style.display = 'none';
+        previewPlaceholder.style.display = 'block';
+
+        switchView('gallery');
+      } catch (err) {
+        console.error(err);
+        alert('Could not save memory. Check server logs.');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtnText.textContent = 'Save memory';
+      }
+    });
+
+    // Load Memories from DynamoDB
+    async function loadGallery() {
+      const grid = document.getElementById('memoriesGrid');
+      try {
+        const res = await fetch(API_URL);
+        memoriesCache = await res.json();
+
+        if (!memoriesCache || memoriesCache.length === 0) {
+          grid.innerHTML = `
+            <div class="empty-state">
+              <h3>Your journal is waiting for its first memory</h3>
+              <p style="margin-bottom: 22px;">Capture a quiet morning, a favorite meal, or a place you loved.</p>
+              <button class="btn-primary" onclick="switchView('create')">Capture a moment →</button>
+            </div>
+          `;
+          return;
+        }
+
+        grid.innerHTML = memoriesCache.map(item => {
+          const mood = item.mood || 'Happy';
+          const dotColor = MOOD_COLORS[mood] || '#f2c94c';
+          const formattedDate = formatTimestamp(item.timestamp);
+
+          return `
+            <article class="memory-item" id="card-${item.photo_id}">
+              <div class="memory-img-wrap">
+                <img src="${item.imageUrl}" alt="${escapeHtml(item.title)}" loading="lazy" />
+                <div class="memory-actions">
+                  <button class="icon-action-btn" title="Edit memory" onclick="openInlineEdit('${item.photo_id}')">
+                    <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                  </button>
+                  <button class="icon-action-btn" title="Delete memory" onclick="deleteMemory('${item.photo_id}', '${encodeURIComponent(item.fileName)}')">
+                    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <div id="meta-${item.photo_id}">
+                <h3 class="memory-title">${escapeHtml(item.title)}</h3>
+                <div class="memory-mood">
+                  <span class="mood-dot" style="background:${dotColor}"></span>
+                  ${escapeHtml(mood)}
+                </div>
+                <div class="memory-date">${formattedDate}</div>
+              </div>
+            </article>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error(err);
+        grid.innerHTML = `<p>Error loading memories.</p>`;
+      }
+    }
+
+    function openInlineEdit(photo_id) {
+      const item = memoriesCache.find(m => m.photo_id === photo_id);
+      if (!item) return;
+
+      const metaContainer = document.getElementById(`meta-${photo_id}`);
+      const moods = ['Happy', 'Calm', 'Excited', 'Loved', 'Thoughtful', 'Sad', 'Tired'];
+
+      metaContainer.innerHTML = `
+        <div class="inline-edit-box">
+          <input type="text" id="edit-title-${photo_id}" value="${escapeHtml(item.title)}" />
+          <select id="edit-mood-${photo_id}">
+            ${moods.map(m => `<option value="${m}" ${m === (item.mood || 'Happy') ? 'selected' : ''}>${m}</option>`).join('')}
+          </select>
+          <div class="inline-edit-actions">
+            <button class="btn-sm btn-sm-save" onclick="saveInlineEdit('${photo_id}')">Save</button>
+            <button class="btn-sm btn-sm-cancel" onclick="loadGallery()">Cancel</button>
+          </div>
+        </div>
+      `;
+    }
+
+    async function saveInlineEdit(photo_id) {
+      const newTitle = document.getElementById(`edit-title-${photo_id}`).value.trim();
+      const newMood = document.getElementById(`edit-mood-${photo_id}`).value;
+
+      try {
+        const res = await fetch(`${API_URL}/${photo_id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: newTitle, mood: newMood })
+        });
+        if (res.ok) loadGallery();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function deleteMemory(photo_id, encodedFileName) {
+      if (!confirm('Remove this memory from your journal?')) return;
+      try {
+        const res = await fetch(`${API_URL}/${encodeURIComponent(photo_id)}?fileName=${encodedFileName}`, { method: 'DELETE' });
+        if (res.ok) loadGallery();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function formatTimestamp(iso) {
+      if (!iso) return '';
+      const d = new Date(iso);
+      if (isNaN(d)) return '';
+      const day = d.getDate();
+      const month = d.toLocaleString('en-GB', { month: 'short' });
+      const year = d.getFullYear();
+      const hours = String(d.getHours()).padStart(2, '0');
+      const mins = String(d.getMinutes()).padStart(2, '0');
+      return `${day} ${month} ${year} · ${hours}:${mins}`;
+    }
+
+    function escapeHtml(str) {
+      return String(str || '').replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+      }[tag]));
+    }
+  </script>
+</body>
+</html>
