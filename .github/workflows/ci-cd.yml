@@ -1,0 +1,34 @@
+name: Keepsake CI-CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  continuous-integration:
+    name: CI - Lint, Security Audit, and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js (Baseline - Unoptimised)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Validate CloudFormation template syntax
+        run: python3 -c "import yaml; yaml.safe_load(open('infrastructure.yaml'))"
+
+      - name: Run ESLint static code analysis
+        run: npm run lint
+
+      - name: Run npm security vulnerability audit
+        run: npm audit --audit-level=high
+
+      - name: Run Jest automated tests
+        run: npm test

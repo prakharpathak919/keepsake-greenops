@@ -85,7 +85,7 @@ app.get('/api/photos', async (req, res) => {
             { expiresIn: 3600 }
           );
           return { ...item, imageUrl: signedUrl, fileName: key };
-        } catch (e) {
+        } catch {
           return item;
         }
       }
@@ -149,6 +149,21 @@ app.delete('/api/photos/:photo_id', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Keepsake Photo Journal running on port ${port}`);
+// Health telemetry endpoint for observability and automated rollback checks
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "healthy",
+    service: "keepsake-photo-journal",
+    uptimeSeconds: Math.floor(process.uptime()),
+    memoryUsageMB: Math.round(process.memoryUsage().rss / 1024 / 1024),
+    timestamp: new Date().toISOString()
+  });
 });
+
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Keepsake Photo Journal running on port ${port}`);
+  });
+}
+
+module.exports = app;
