@@ -22,7 +22,14 @@ jobs:
         run: npm install
 
       - name: Validate CloudFormation template syntax
-        run: python3 -c "import yaml; yaml.safe_load(open('infrastructure.yaml'))"
+        run: |
+          python3 -c "
+          import yaml
+          class CFNLoader(yaml.SafeLoader): pass
+          CFNLoader.add_multi_constructor('!', lambda loader, suffix, node: None)
+          yaml.load(open('infrastructure.yaml'), Loader=CFNLoader)
+          print('CloudFormation template syntax valid.')
+          "
 
       - name: Run ESLint static code analysis
         run: npm run lint
