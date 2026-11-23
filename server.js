@@ -18,7 +18,7 @@ const s3Client = new S3Client({ region: 'us-east-1' });
 const ddbClient = new DynamoDBClient({ region: 'us-east-1' });
 const docClient = DynamoDBDocumentClient.from(ddbClient);
 
-const BUCKET_NAME = 's3-project-green.ops';
+const BUCKET_NAME = 'elasticbeanstalk-us-east-1-524890435583';
 const TABLE_NAME = 'PhotoJournal';
 
 const upload = multer({ storage: multer.memoryStorage() });
