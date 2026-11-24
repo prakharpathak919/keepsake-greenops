@@ -67,7 +67,7 @@ jobs:
           VERSION_LABEL="gh-${GITHUB_SHA::7}-$(date +%s)"
           aws s3 cp deploy-package.zip s3://elasticbeanstalk-us-east-1-524890435583/keepsake-greenops/${VERSION_LABEL}.zip
           aws elasticbeanstalk create-application-version \
-            --application-name YOUR_EB_APP_NAME \
+            --application-name keepsake-greenops \
             --version-label "${VERSION_LABEL}" \
             --source-bundle S3Bucket="elasticbeanstalk-us-east-1-524890435583",S3Key="keepsake-greenops/${VERSION_LABEL}.zip"
           aws elasticbeanstalk update-environment \
